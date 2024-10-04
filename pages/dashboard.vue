@@ -2,18 +2,21 @@
     <div class="min-h-screen bg-gray-100">
         <Header title="Hello Julien !" />
 
-        <!-- Main content -->
         <main class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
             <div class="px-4 py-6 sm:px-0">
                 <h2 class="text-xl text-center mb-6">Prêt à s'amuser ?</h2>
 
-                <!-- Grid layout for widgets -->
                 <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                    <!-- Current session widget -->
+                    <!-- Sessions widget -->
                     <div class="bg-white overflow-hidden shadow rounded-lg">
                         <div class="px-4 py-5 sm:p-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">Session en cours</h3>
-                            <p class="text-gray-600">Aucune session en cours</p>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Événements à venir</h3>
+                            <ul class="divide-y divide-gray-200">
+                                <li v-for="event in upcomingEvents" :key="event.id" class="py-3">
+                                    <p class="text-sm font-medium text-gray-900">{{ event.spot.name }}</p>
+                                    <p class="text-sm text-gray-500">{{ formatDateTime(event.date, event.time) }}</p>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 
@@ -28,8 +31,8 @@
                     <!-- Map component -->
                     <div class="bg-white overflow-hidden shadow rounded-lg col-span-1 sm:col-span-2 lg:col-span-1">
                         <div class="px-4 py-5 sm:p-6">
-                            <h3 class="text-lg font-medium text-gray-900 mb-2">Carte</h3>
-                            <Map />
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Carte des spots</h3>
+                            <Map :defaultSpot="defaultSpot" />
                         </div>
                     </div>
                 </div>
@@ -39,9 +42,28 @@
 </template>
 
 <script setup>
+import { useEventStore } from '~/stores/eventStore.js'
+
+const router = useRouter()
+const eventStore = useEventStore()
+
+const defaultSpot = ref({ name: "Rocher de l'Éléphant", lat: 48.8566, lng: 2.3522 })
+
+const upcomingEvents = computed(() => {
+    return eventStore.getEvents.slice().sort((a, b) => {
+        const dateA = new Date(a.date + 'T' + a.time)
+        const dateB = new Date(b.date + 'T' + b.time)
+        return dateA - dateB
+    })
+})
 
 const startClimbing = () => {
-    console.log('Starting climbing session...')
+    router.push('/event/step1')
+}
+
+const formatDateTime = (date, time) => {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' }
+    return new Date(date + 'T' + time).toLocaleDateString('fr-FR', options)
 }
 </script>
 
