@@ -1,6 +1,7 @@
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  devtools: { enabled: true },
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -38,9 +39,28 @@ export default {
 
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
+    '@nuxtjs/google-fonts',
+    '@nuxt/image',
+    '@pinia/nuxt',
   ],
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+
+  googleFonts: {
+    families: {
+      Roboto: true,
+      Lato: [100, 300],
+      // Ajoutez les polices que vous souhaitez utiliser ici
+    }
+  },
+
+  image: {
+    // Configuration du module Nuxt Image
+  },
+
+  pinia: {
+    // Configuration pour Pinia si nécessaire
   }
 }
