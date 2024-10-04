@@ -1,25 +1,22 @@
 {
-  "name": "AppClimber",
-  "version": "1.0.0",
+  "name": "nuxt-app",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "nuxt",
     "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate"
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@nuxt/image": "^1.8.1",
-    "@nuxtjs/google-fonts": "^3.2.0",
-    "@pinia/nuxt": "^0.5.5",
-    "core-js": "^3.25.3",
-    "nuxt": "^2.15.8",
-    "vue": "^2.7.10",
-    "vue-server-renderer": "^2.7.10",
-    "vue-template-compiler": "^2.7.10"
+    "lucide-vue-next": "^0.447.0",
+    "nuxt": "^3.13.0",
+    "vue": "latest",
+    "vue-router": "latest"
   },
   "devDependencies": {
     "@nuxtjs/tailwindcss": "^6.12.1",
-    "postcss": "^8.4.17"
+    "@pinia/nuxt": "^0.5.5"
   }
 }
