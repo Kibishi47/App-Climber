@@ -12,9 +12,17 @@
                         <div class="px-4 py-5 sm:p-6">
                             <h3 class="text-lg font-medium text-gray-900 mb-2">Événements à venir</h3>
                             <ul class="divide-y divide-gray-200">
-                                <li v-for="event in upcomingEvents" :key="event.id" class="py-3">
-                                    <p class="text-sm font-medium text-gray-900">{{ event.spot.name }}</p>
-                                    <p class="text-sm text-gray-500">{{ formatDateTime(event.date, event.time) }}</p>
+                                <li v-for="event in upcomingEvents" :key="event.id"
+                                    class="py-3 flex justify-between items-center">
+                                    <div>
+                                        <p class="text-sm font-medium text-gray-900">{{ event.spot.name }}</p>
+                                        <p class="text-sm text-gray-500">{{ formatDateTime(event.date, event.time) }}
+                                        </p>
+                                    </div>
+                                    <button @click="goToEventChat(event.id)"
+                                        class="bg-primary text-white p-2 rounded-full hover:bg-primary-dark transition duration-300">
+                                        <MessageCircle class="h-5 w-5" />
+                                    </button>
                                 </li>
                             </ul>
                         </div>
@@ -42,6 +50,7 @@
 </template>
 
 <script setup>
+import { MessageCircle } from 'lucide-vue-next';
 import { useEventStore } from '~/stores/eventStore.js'
 
 const router = useRouter()
@@ -59,6 +68,10 @@ const upcomingEvents = computed(() => {
 
 const startClimbing = () => {
     router.push('/event/step1')
+}
+
+const goToEventChat = (eventId) => {
+    router.push(`/event/${eventId}`)
 }
 
 const formatDateTime = (date, time) => {
